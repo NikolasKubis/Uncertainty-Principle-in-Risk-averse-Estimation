@@ -6,7 +6,7 @@ data {
 }
 
 parameters {
-  vector<lower=0>[BATCH] x; // a vector of length BATCH
+  vector<lower=0>[BATCH] x; 
 }
 
 model {
