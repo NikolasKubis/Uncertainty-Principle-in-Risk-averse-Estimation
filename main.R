@@ -1,9 +1,5 @@
 # setwd(" ")
 
-#This programm implements the risk-averse estimator and computes 
-# the MSE and SEV for the different values of the risk-awere parameter.
-# Furthermore, the trade-off regarding the Uncertainty Principle is computed 
-# and found that it achieves a minimum -as expected- close to zero.
 
 # The sampling of the posterior is made using the prior stan.model.
 # Subsequently the sampler for the posterior is made by utilizing a second stan.model.
@@ -67,7 +63,6 @@ multiplier <-function(x,A,v)
 
 
 
-#B=matrix(0,nrow=10000,ncol = 8000)
 risky <-function(x,jm)
 {
   m1=colMeans(jm)
@@ -110,9 +105,9 @@ stan_data <- list(
 fit_prior <- sampling( model_prior, data = stan_data, chains=4, iter=2500, warmup =500,
                       control = list('adapt_delta' = 0.99, 'max_treedepth' = 10))
 
-## number of samples=chains*(iter-warmup)=12000.
+## samples=chains*(iter-warmup)
 
-#----------------------------------------leave it or it dies...softly ----------------------------------------
+#----------------------------------------leave it or die...softly ----------------------------------------
 
 samples_prior <- as.data.frame(extract(fit_prior, permuted=TRUE)) 
 
@@ -138,7 +133,7 @@ fit_posterior <- sampling(model_posterior, data = stan_data,
 
 
 
-#-------------------------------------leave it or it dies..softly------------------------------------------
+#-------------------------------------leave it or die..softly------------------------------------------
 
 
 
@@ -146,10 +141,6 @@ samples_posterior <- as.data.frame(extract(fit_posterior, permuted=TRUE))
 
 
 joint_matrix<-data.matrix(samples_posterior[,1:(ncol(samples_posterior)-1)])
-
-# Each column of this matrix corresponds to an observable. 
-# and defines f(x | the observable). 
-# So each column contains samples from f(x | the observable).
 
 
 
@@ -163,15 +154,6 @@ x_risk=matrix(0,nSamples_prior)
 
 conditional_risk=matrix(0,nSamples_prior); # The predictive variance
 
-#mse=matrix(0,length(mu))
-
-
-# Calling the multiplier to compute the mse as a function of mu.
-#mse=t(t(as.matrix(sapply(mu,FUN=multiplier,joint_matrix,x))))
-
-
-#B=matrix(0,nrow=10000,ncol = 8000)
-
 
 n_mu=31
 mu=matrix(0:30,n_mu)*0.1
@@ -183,19 +165,6 @@ risk=t(t(as.matrix(sapply(mu,FUN=risky,joint_matrix))))
 
 plot(mu,risk)
 
-
-
-#for (i in 1:length(mu))
-#{
-# for (j in 1:nSamples_prior-1)
-#  {
-#   x_risk[j]=risk_averse(joint_matrix,mu[i])
-#    conditional_risk[j]=mean(((joint_matrix[,j]-x_risk[j])^2 - mean(  (joint_matrix[,j]-x_risk[j])^2 ) )^2 )
-#}
-#mse[i]=mean((x-x_risk)^2)
-#  risk[i]=mean(conditional_risk)
-# product[i]=mse[i]*risk[i]
-#}
 
 #####################################       PLOTS      ###############################################
 
@@ -244,7 +213,3 @@ ggplot(newdata_product, aes(x=mu, y=product,alpha=10/product))+
 
 #write.table(product, file="product.Rdata")
 #product_data<-read.table("product.Rdata") 
-
-
-# In R when you use as.matrix(some_data_structure) and the struct is 
-# one dimensional, what is returned is always a column.
