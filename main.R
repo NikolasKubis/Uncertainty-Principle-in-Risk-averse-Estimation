@@ -1,7 +1,7 @@
 # setwd(" ")
 
 
-# The sampling of the posterior is made using the prior stan.model.
+# The sampling of the prior is made using the prior stan.model.
 # Subsequently the sampler for the posterior is made by utilizing a second stan.model.
 
 
@@ -17,7 +17,7 @@ options(mc.cores = parallel::detectCores())
 rstan_options(auto_write = TRUE)
 
 
-#The maximally_risk_averse_estimator.
+#The maximally_risk.
 maximally_risk <- function(jm) {
   m1=colMeans(jm)
   m2=colMeans(jm^2)
@@ -26,8 +26,7 @@ maximally_risk <- function(jm) {
 }
 
 
-#The risk_averse_estimator (inputs = samples from one posterior and 
-# parameter mu) 
+#The risk_averse_estimator 
 #Takes as inputs the Joint Matrix and the parameter mu
 # Outputs a vector with length equal to the length of the observables\\
 # or equivalently to the length of the prior samples.
@@ -46,7 +45,6 @@ risk_averse <- function(jm, mu) {
 # equal to the number of observables=number of samples from prior.
 conditional_mean<-function(jm){
   return(colMeans(jm)) 
-  
 }
 
 # This function creates the mse as a function of mu. 
@@ -83,9 +81,6 @@ risky <-function(x,jm)
   
   return(r)
 }
-
-
-
 
 
 
