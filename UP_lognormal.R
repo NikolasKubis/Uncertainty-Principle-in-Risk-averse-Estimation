@@ -1,6 +1,5 @@
 
 # The sampling of the prior is made using the prior stan.model.
-# Subsequently the sampler for the posterior is made by utilizing a second stan.model.
 
 
 #Loading the libs..
@@ -27,8 +26,8 @@ maximally_risk <- function(jm) {
 #The risk_averse_estimator (inputs = samples from one posterior and 
 # parameter mu) 
 #Takes as inputs the Joint Matrix and the parameter mu
-# Outputs a vector with length equal to the length of the observables\\
-# or equivalently to the length of the prior samples.
+# Outputs a vector with length equal to the length of the observables
+# -equivalently- to the length of the prior samples.
 
 risk_averse <- function(jm, mu) {
   m1 <- colMeans(jm)
@@ -96,7 +95,7 @@ risky <-function(x,jm)
 
 
 #DEFINING THE PRIOR 
-# This stan model samples from the prior and also generates ranrom output samples
+# This stan model samples from the prior and also generates output samples
 # normally distributed with state dependency.
 model_prior <- stan_model('prior.stan') #
 
