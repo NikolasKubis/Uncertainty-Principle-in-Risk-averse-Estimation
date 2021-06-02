@@ -2,7 +2,6 @@
 
 
 # The sampling of the prior is made using the prior stan.model.
-# Subsequently the sampler for the posterior is made by utilizing a second stan.model.
 
 
 #Loading the libs..
@@ -42,7 +41,7 @@ risk_averse <- function(jm, mu) {
 
 #Computes the conditinal mean. 
 # Takes as input the joint matrix and returns a vector with length 
-# equal to the number of observables=number of samples from prior.
+# equal to the #of observables= #samples from prior.
 conditional_mean<-function(jm){
   return(colMeans(jm)) 
 }
