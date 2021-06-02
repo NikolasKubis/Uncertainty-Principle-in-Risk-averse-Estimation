@@ -1,11 +1,11 @@
 
 
 data{ // INPUTS
-int<lower=0> N; //number of evaluations of the model (declared as always positive integer !)
+int<lower=0> N; 
 }
 
 parameters {
-real x; // parameter w.r.t. we want to sample.
+real x; 
 }
 
 
